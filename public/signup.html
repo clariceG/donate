@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>SignUp Page</title>
+</head>
+<body class="bg-gray-200">
+    <section class="bg-white float-right px-48" style="height: 100vh;">
+        <div>
+            <h1 class="font-bold text-6xl leading-relaxed ml-10 text-red-600">Create Account</h1>
+            <form action="" method="post">
+                <input class="text-red-400 rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Username" name="username" type="text" id="username"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Email" type="Email" name="email" id="email"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Gender" type="Gender" name="gender" id="gender"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Marital Status" type="Marital Status" name="marital status" id="marital status"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Occupation" type="Occupation" name="occupation" id="occupation"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Password" type="password" name="password" id="password"/><br>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password"/><br>
+                <!-- <input type="hidden" class="rounded-md px-10 py-2 mt-10" style="background-color: #8CBCD7;" value="2" name="role" id="role" /><br> -->
+                <button type="submit" name="submit" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">SIGN UP</button><br>
+            </form>
+            <!-- <p class="text-gray-800 text-l text-center ml-3">Or register with the following</p> -->
+            <!-- <div class="flex flex-row space-x-12 mt-5 ml-32">
+                <img src="images/facebook.png" alt="">
+                <img src="images/google.png" alt="">
+                <img src="images/twitter.png" alt="">
+            </div> -->
+            <!-- <button class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-sky-200">SIGN UP</button> -->
+        </div>
+        </section>
+    <section class="pt-32 pl-12 w-96">
+        <div class="text-center text-black">
+            <h1 class="font-bold text-6xl leading-relaxed text-red-600">Welcome</h1>
+            <p class="text-2xl leading-relaxed">Already have an account?<br>log in with your personal info</p>
+            <button class="rounded-full border-2 border-black bg-transparent px-28 py-2 mt-10 text-2xl font-bold hover:border-red-500 hover:text-gray-800"><a href="login.html">LOG IN</a></button>
+        </div>
+    </section>
+</body>
+</html>
