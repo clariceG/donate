@@ -40,12 +40,10 @@
     
     <section class="bg-white float-right px-48" style="height: 100vh;">
         <div>
-            <h1 class="font-bold text-6xl leading-relaxed ml-14 mt-5 text-red-600">User Account</h1>
+            <h1 class="font-bold text-6xl leading-relaxed ml-14 mt-5 text-red-600">Enter Your Email</h1>
             <form class="mt-5">
-                <input required class="rounded-md pl-10 pr-56 py-2 mt-4 text-gray-500" style="background-color: rgba(97, 97, 97, 0.08);" name="email" placeholder="Email"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="OTP" type="otp" name="otp" id="otp"/><br>
-                <input required class="rounded-md pl-10 pr-56 py-2 mt-4 text-gray-500" style="background-color: rgba(97, 97, 97, 0.08);" type="password" name="password" placeholder="Password"/><br>
-                <button type="button" onclick="login()" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">LOG IN</button>
+                <input class="rounded-md pl-10 pr-56 py-2 mt-4 text-gray-500" style="background-color: rgba(97, 97, 97, 0.08);" name="email" placeholder="Email"/><br>
+                <button type="button" onclick="sendEmail()" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">NEXT</button>
             </form>
         </div>
     </section>
@@ -58,40 +56,22 @@
     </section>
 
     <script>
-        async function login() {
+        async function sendEmail() {
             const emailInput = document.querySelector('input[name="email"]').value;
-            const otpInput = document.querySelector('input[name="otp"]').value;
-            const passwordInput = document.querySelector('input[name="password"]').value;
-
-            // Check if any required field is empty
-            if (!emailInput || !otpInput || !passwordInput) {
-                alert('Please fill in all required fields.');
-                return;
-            }
-
-            const endpoint = "http://localhost:5000/signin";
-
+            const endpoint = "http://localhost:5000/otp";
+            
             const response = await fetch(endpoint, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({
-                    email: emailInput,
-                    otp: otpInput,
-                    password: passwordInput,
-                }),
+                body: JSON.stringify({ email: emailInput }),
             });
 
             if (response.status === 200) {
                 const data = await response.json();
-                alert("Log in successfully");
-                localStorage.setItem('userId', data.data.userId);
-                localStorage.setItem('firstName', data.data.firstName);
-                localStorage.setItem('lastName', data.data.lastName);
-                localStorage.setItem('email', data.data.email);
-                localStorage.setItem('token', data.token);
-                window.location.href = 'donate.html'; // Redirect to donation.html
+                alert(data.message);
+                window.location.href = 'login.html'; // Redirect to login.html
             } else {
                 const errorData = await response.json();
                 alert('Error: ' + errorData.message);

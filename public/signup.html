@@ -8,35 +8,88 @@
     <title>SignUp Page</title>
 </head>
 <body class="bg-gray-200">
+    <script>
+        // Function to check user authorization
+        async function checkAuthorization() {
+            // Retrieve the user's token from local storage
+            const token = localStorage.getItem('token');
+            
+            if (!token) {
+                return;
+            }
+
+            // Make a request to the / endpoint with the user's token
+            const endpoint = "http://localhost:5000/";
+            const response = await fetch(endpoint, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${token}`,
+                },
+            });
+
+            if (response.status === 200) {
+                window.location.href = 'donate.html';               
+            } else if (response.status === 401) {
+                return;
+            }
+        }
+
+        // Call the function to check user authorization when the page loads
+        checkAuthorization();
+    </script>
+    
+    
     <section class="bg-white float-right px-48" style="height: 100vh;">
         <div>
             <h1 class="font-bold text-6xl leading-relaxed ml-10 text-red-600">Create Account</h1>
-            <form action="" method="post">
-                <input class="text-red-400 rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Username" name="username" type="text" id="username"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Email" type="Email" name="email" id="email"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Gender" type="Gender" name="gender" id="gender"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Marital Status" type="Marital Status" name="marital status" id="marital status"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Occupation" type="Occupation" name="occupation" id="occupation"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Password" type="password" name="password" id="password"/><br>
-                <input class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" required placeholder="Confirm Password" type="password" name="confirm_password" id="confirm_password"/><br>
-                <!-- <input type="hidden" class="rounded-md px-10 py-2 mt-10" style="background-color: #8CBCD7;" value="2" name="role" id="role" /><br> -->
-                <button type="submit" name="submit" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">SIGN UP</button><br>
+            <form>
+                <input required class="text-red-400 rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" placeholder="First Name" name="firstName" type="text" id="firstname"/><br>
+                <input required class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" placeholder="Last Name" type="text" name="lastName" id="lastname"/><br>
+                <input required class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" placeholder="Email" type="Email" name="email" id="email"/><br>
+                <input required class="rounded-md pl-10 pr-56 py-2 mt-4" style="background-color: rgba(97, 97, 97, 0.08);" placeholder="Password" type="password" name="password" id="password"/><br>
+                <button type="button" onclick="signup()" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">SIGN UP</button><br>
             </form>
-            <!-- <p class="text-gray-800 text-l text-center ml-3">Or register with the following</p> -->
-            <!-- <div class="flex flex-row space-x-12 mt-5 ml-32">
-                <img src="images/facebook.png" alt="">
-                <img src="images/google.png" alt="">
-                <img src="images/twitter.png" alt="">
-            </div> -->
-            <!-- <button class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-sky-200">SIGN UP</button> -->
         </div>
-        </section>
+    </section>
     <section class="pt-32 pl-12 w-96">
         <div class="text-center text-black">
             <h1 class="font-bold text-6xl leading-relaxed text-red-600">Welcome</h1>
             <p class="text-2xl leading-relaxed">Already have an account?<br>log in with your personal info</p>
-            <button class="rounded-full border-2 border-black bg-transparent px-28 py-2 mt-10 text-2xl font-bold hover:border-red-500 hover:text-gray-800"><a href="login.html">LOG IN</a></button>
+            <button class="rounded-full border-2 border-black bg-transparent px-28 py-2 mt-10 text-2xl font-bold hover:border-red-500 hover:text-gray-800"><a href="otp.html">LOG IN</a></button>
         </div>
     </section>
+
+    <script>
+        async function signup() {
+            const firstNameInput = document.querySelector('input[name="firstName"]').value;
+            const lastNameInput = document.querySelector('input[name="lastName"]').value;
+            const emailInput = document.querySelector('input[name="email"]').value;
+            const passwordInput = document.querySelector('input[name="password"]').value;
+            const endpoint = "http://localhost:5000/signup"; // Adjust the endpoint URL
+
+            const response = await fetch(endpoint, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    firstName: firstNameInput,
+                    lastName: lastNameInput,
+                    email: emailInput,
+                    password: passwordInput,
+                }),
+            });
+
+            if (response.status === 200) {
+                const data = await response.json();
+                alert('Signup successful');
+                // Redirect to otp.html after alert
+                window.location.href = 'otp.html';
+            } else {
+                const errorData = await response.json();
+                alert('Error: ' + errorData.message);
+            }
+        }
+    </script>
 </body>
 </html>
