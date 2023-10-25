@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Your head content -->
+</head>
+<body class="text-gray-500">
+    <section>
+        <div class="grid md:grid-cols-3">
+            <!-- Your navigation and existing content -->
+        </div>
+    </section>
+
+    <section>
+        <div class="flex justify-center">
+            <div class="max-w-lg">
+                <h2 class="text-xl font-semibold">Add a Donation Drive</h2>
+                <form id="donation-form" enctype="multipart/form-data">
+                    <input type="text" id="drive-title" placeholder="Title" required>
+                    <textarea id="drive-description" placeholder="Description" required></textarea>
+                    <input type="file" id="drive-image" accept="image/*" required>
+                    <button type="submit">Add Donation Drive</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <div class="flex justify-center">
+            <div class="max-w-lg">
+                <h2 class="text-xl font-semibold">Donation Drives</h2>
+                <div id="donation-drives-container">
+                    <!-- Donation drives will be displayed here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Include your external JavaScript file (donation.js) -->
+    <script src="drive.js"></script>
+</body>
+</html>

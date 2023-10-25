@@ -1,27 +1,26 @@
 const dotenv = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
-const cors = require("cors"); // Import the cors package
+const cors = require("cors");
+const apiRoutes = require("./routes/api");
 
 const app = express();
-
 const port = process.env.PORT;
+const MONGODB_URI = 'mongodb+srv://clarice:root@claricecluster.8hretxk.mongodb.net/donation';
 
 app.use(express.json());
-
-// Enable CORS for all routes
 app.use(cors());
 
-// user route
-app.use("", require("./routes/userRoutes"));
+app.use("/api", apiRoutes);
 
 mongoose
-  .connect(process.env.STRING)
-  .then((result) => {
-    console.log("DB Connected!");
-    app.listen(process.env.PORT);
-    console.log("Server running on port " + process.env.PORT);
+  .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => {
+    console.log('Connected to MongoDB');
+    app.listen(port, () => {
+      console.log(`Server is running on port ${port}`);
+    });
   })
   .catch((err) => {
-    console.log(err.message);
+    console.error('Failed to connect to MongoDB', err);
   });
