@@ -10,7 +10,9 @@ const MONGODB_URI = 'mongodb+srv://clarice:root@claricecluster.8hretxk.mongodb.n
 
 app.use(express.json());
 app.use(cors());
-
+// user route
+app.use("", require("./routes/userRoutes"));
+// donations routes
 app.use("/api", apiRoutes);
 
 mongoose
