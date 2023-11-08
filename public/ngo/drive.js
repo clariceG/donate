@@ -42,3 +42,12 @@ document.addEventListener('DOMContentLoaded', function () {
     // Add an event listener to the "delete Donation Drives" button
     // Add an event listener to the "Load more Donation Drives" button
 });
+
+
+
+
+
+document.getElementById('btn-add').addEventListener('click', function (event) {
+    event.preventDefault(); // Prevent the default link behavior
+    document.getElementById('addDriveForm').removeAttribute('hidden');
+  });

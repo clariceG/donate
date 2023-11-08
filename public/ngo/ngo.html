@@ -10,7 +10,7 @@
     <!-- Navigation on the left -->
     <nav class="w-1/4  text-gray-700 p-4">
         <ul>
-            <li><a href="#drives" class="nav-link">Home Page</a></li>
+            <li><a href="#home" class="nav-link">Home Page</a></li>
             <li><a href="#drives" class="nav-link">Donation Drives</a></li>
             <li><a href="#donations" class="nav-link">Donations</a></li>
             <li><a href="#predictions" class="nav-link">Predictions</a></li>
@@ -21,7 +21,6 @@
     <main class="w-3/4 p-4">
         <h1 class="text-4xl font-bold mb-4">Welcome Ngo Personnel!</h1>
         <p class="text-lg mb-4">
-            Here, you can manage everything related to your Ngo. 
             Please feel free to explore the different sections.
         </p>
 
@@ -35,13 +34,58 @@
                 <a href="#" id="btn-delete" class="color-gray-400">Delete Drives</a>
             </div>
 
-            <form id="addDriveForm" class="hidden">
-                <!-- Your form fields -->
-            </form>
+            <div class="max-w-md mx-auto bg-white p-8 shadow-2xl rounded-md" id="addDriveForm" hidden>
+                <h2 class="text-2xl font-bold mb-4">Add New Donation Drive</h2>
+                <form action="http://localhost:5000/api/drives" method="POST" enctype="multipart/form-data">
+                  <div class="mb-4">
+                    <label for="title" class="block text-gray-600 text-sm font-medium">Title</label>
+                    <input
+                      type="text"
+                      id="title"
+                      name="title"
+                      class="form-input w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                      required
+                    />
+                  </div>
+              
+                  <div class="mb-4">
+                    <label for="description" class="block text-gray-600 text-sm font-medium">Description</label>
+                    <textarea
+                      id="description"
+                      name="description"
+                      class="form-textarea w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                      rows="4"
+                      required
+                    ></textarea>
+                  </div>
+              
+                  <div class="mb-4">
+                    <label for="image" class="block text-gray-600 text-sm font-medium">Image URL</label>
+                    <input
+                      type="text"
+                      id="image"
+                      name="image"
+                      class="form-input w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                      required
+                    />
+                  </div>
+              
+                  <div class="mt-6">
+                    <button
+                      type="submit"
+                      class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                    >
+                      Add Drive
+                    </button>
+                  </div>
+                </form>
+              </div>
+              
         </section>
         <!-- Other content sections (Donations, Predictions, etc.) can be added similarly -->
     </main>
-
+    
+      
     <script src="drive.js"></script>
 </body>
 </html>

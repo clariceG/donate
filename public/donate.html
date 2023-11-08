@@ -3,58 +3,103 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="styles.css">
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>Donate</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
-<body>
-     <script>
-        // Function to check user authorization
-        async function checkAuthorization() {
-            // Retrieve the user's token from local storage
-            const token = localStorage.getItem('token');
-            
-            if (!token) {
-                // If the token is not available, assume the user is not authorized and redirect to OTP page
-                window.location.href = 'otp.html';
-                return;
-            }
+<body class="bg-gray-200 p-4">
+    <div class="max-w-md mx-auto bg-white p-8 shadow-md rounded-md">
+        <h2 class="text-2xl font-bold mb-4">Donation Form</h2>
+        <form action="#" method="POST">
+            <div class="mb-4">
+                <label for="firstName" class="block text-gray-600 text-sm font-medium">First Name</label>
+                <input
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    class="form-input"
+                    required
+                />
+            </div>
+            <div class="mb-4">
+                <label for="lastName" class="block text-gray-600 text-sm font-medium">Last Name</label>
+                <input
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    class="form-input"
+                    required
+                />
+            </div>
+            <div class="mb-4">
+                <label for="donationType" class="block text-gray-600 text-sm font-medium">Donation Type</label>
+                <select
+                    id="donationType"
+                    name="donationType"
+                    class="form-select"
+                    required
+                >
+                    <option value="" disabled selected>Select donation type</option>
+                    <option value="money">Money</option>
+                    <option value="food">Food</option>
+                    <option value="sanitaryTowels">Sanitary Towels</option>
+                </select>
+            </div>
+            <div class="mb-4" id="dropOffSiteField" style="display: none;">
+                <label for="dropOffSite" class="block text-gray-600 text-sm font-medium">Drop-off Site</label>
+                <input
+                    type="text"
+                    id="dropOffSite"
+                    name="dropOffSite"
+                    class="form-input"
+                />
+            </div>
+            <div class="mb-4" id="mpesaField" style="display: none;">
+                <label for="mobileNumber" class="block text-gray-600 text-sm font-medium">Mobile Number (Mpesa)</label>
+                <input
+                    type="text"
+                    id="mobileNumber"
+                    name="mobileNumber"
+                    class="form-input"
+                />
+            </div>
+            <div class="mt-6">
+                <button
+                    type="submit"
+                    class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                >
+                    Donate
+                </button>
+            </div>
+            <div class="mt-6">
+                <div class="flex justify-between">
+                    <button
+                        type="button"
+                        id="btnBack"
+                        class="bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                    >
+                        Back
+                    </button>
+                    <button
+                        type="button"
+                        id="btnNext"
+                        class="bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                    >
+                        Next
+                    </button>
+                </div>
+        </form>
+    </div>
 
-            // Make a request to the / endpoint with the user's token
-            const endpoint = "http://localhost:5000/";
-            const response = await fetch(endpoint, {
-                method: 'GET',
-                headers: {
-                    'Authorization': `Bearer ${token}`,
-                },
-            });
+    <script>
+        const donationTypeSelect = document.getElementById('donationType');
+        const dropOffSiteField = document.getElementById('dropOffSiteField');
+        const mpesaField = document.getElementById('mpesaField');
 
-            if (response.status === 200) {
-                // User is authorized, no action needed
-                return;
-            } else if (response.status === 401) {
-                // User is not authorized, redirect to OTP page
-                window.location.href = 'otp.html';
-            }
-        }
-
-        // Function to sign out and clear user details from local storage
-        function signOut() {
-            localStorage.removeItem('userId');
-            localStorage.removeItem('firstName');
-            localStorage.removeItem('lastName');
-            localStorage.removeItem('email');
-            localStorage.removeItem('token');
-            // Redirect to the login or OTP page as needed
-            window.location.href = 'otp.html'; // You can adjust the destination page
-        }
-
-        // Call the function to check user authorization when the page loads
-        checkAuthorization();
+        donationTypeSelect.addEventListener('change', function () {
+            const selectedDonationType = donationTypeSelect.value;
+            dropOffSiteField.style.display = selectedDonationType === 'food' || selectedDonationType === 'sanitaryTowels' ? 'block' : 'none';
+            mpesaField.style.display = selectedDonationType === 'money' ? 'block' : 'none';
+        });
     </script>
-
-    
-    
-    <button onclick="signOut()" class="rounded-full px-28 py-4 mt-5 text-xl font-bold text-black ml-20 bg-red-600 hover:border-2 hover:border-red-700 hover:bg-red-400">Sign Out</button>
 </body>
 </html>

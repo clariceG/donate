@@ -5,7 +5,7 @@ const Drive = require("../models/drive")
 // Get all donation drives (for the donor home page)
 router.get('/drives', async (req, res) => {
     try {
-        const drives = await Drive.find({});
+        const drives = await Drive.find({},'id title description image');
         res.json(drives);
     } catch (err) {
         res.status(500).json({ error: 'Server error' });
@@ -29,11 +29,11 @@ router.get('/drives/more/:skip/:limit', async (req, res) => {
 router.post('/drives', async (req, res) => {
     const { title, description } = req.body;
 
-    if (!title || !description) {
+    if (!title || !description || !image) {
         return res.status(400).json({ error: 'Title and description are required' });
     }
 
-    const newDrive = new Drive({ title, description });
+    const newDrive = new Drive({ title, description, image });
 
     try {
         const savedDrive = await newDrive.save();
@@ -46,16 +46,16 @@ router.post('/drives', async (req, res) => {
 // Update a donation drive (for NGO personnel)
 router.put('/drives/:id', async (req, res) => {
     const driveId = req.params.id;
-    const { title, description } = req.body;
+    const { title, description, image } = req.body;
 
-    if (!title || !description) {
-        return res.status(400).json({ error: 'Title and description are required' });
+    if (!title || !description || !image) {
+        return res.status(400).json({ error: 'Title, description and Image are required' });
     }
 
     try {
         const updatedDrive = await Drive.findByIdAndUpdate(
             driveId,
-            { title, description },
+            { title, description, image },
             { new: true }
         );
         res.json(updatedDrive);
