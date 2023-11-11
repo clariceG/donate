@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>User Details Form</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center">
+
+  <div class="bg-white p-8 rounded shadow-md w-full sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3 ">
+
+    <h2 class="text-2xl font-semibold text-center mb-4">User Details Form</h2>
+
+    <form action="/userdetails" method="post" class="grid grid-cols-2 gap-4">
+
+      <!-- Gender -->
+      <div class="mb-4 ">
+        <label for="gender" class="block text-sm font-medium text-gray-600">Gender</label>
+        <select id="gender" name="gender" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+          <option value="Select an Option">Select an Option</option>
+          <option value="male">Male</option>
+          <option value="female">Female</option>
+        </select>
+      </div>
+
+      <!-- Age -->
+      <div class="mb-4 " >
+        <label for="age" class="block text-sm font-medium text-gray-600">Age</label>
+        <input type="number" id="age" name="age" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+      </div>
+
+      <!-- Education Level -->
+      <div class="mb-4">
+        <label for="education" class="block text-sm font-medium text-gray-600">Education Level</label>
+        <select id="education" name="education" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+          <option value="Select an Option">Select an Option</option>
+          <option value="Bachelors">Bachelors</option>
+          <option value="HS-grad">HS-grad</option>
+          <option value="11th">11th</option>
+          <option value="Masters">Masters</option>
+          <option value="9th">9th</option>
+          <option value="Some-college">Some-college</option>
+          <option value="Assoc-acdm">Assoc-acdm</option>
+          <option value="7th-8th">7th-8th</option>
+          <option value="Doctorate">Doctorate</option>
+          <option value="Assoc-voc">Assoc-voc</option>
+          <option value="Prof-school">Prof-school</option>
+          <option value="5th-6th">5th-6th</option>
+          <option value="10th">10th</option>
+          <option value="Preschool">Preschool</option>
+          <option value="12th">12th</option>
+          <option value="1st-4th">1st-4th</option>
+        </select>
+      </div>
+
+      <!-- Marital Status -->
+      <div class="mb-4">
+        <label for="maritalStatus" class="block text-sm font-medium text-gray-600">Marital Status</label>
+        <select id="maritalStatus" name="maritalStatus" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+          <option value="Select an Option">Select an Option</option>
+          <option value="Never-married">Never-married</option>
+          <option value="Married-civ-spouse">Married-civ-spouse</option>
+          <option value="Divorced">Divorced</option>
+          <option value="Married-spouse-absent">Married-spouse-absent</option>
+          <option value="Separated">Separated</option>
+          <option value="Married-AF-spouse">Married-AF-spouse</option>
+          <option value="Widowed">Widowed</option>
+        </select>
+      </div>
+
+      <!-- Occupation -->
+      <div class="mb-4">
+        <label for="occupation" class="block text-sm font-medium text-gray-600">Occupation</label>
+        <select name="occupation" id="occupation" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+            <option value="Select an Option">Select an Option</option>
+            <option value="Adm-clerical">Adm-clerical</option>
+            <option value="Exec-managerial">Exec-managerial</option>
+            <option value="Handlers-cleaners">Handlers-cleaners</option>
+            <option value="Prof-specialty">Prof-specialty</option>
+            <option value=" Sales"> Sales</option>
+            <option value="Transport-moving">Transport-moving</option>
+            <option value="Farming-fishing">Farming-fishing</option>
+            <option value="Machine-op-inspct">Machine-op-inspct</option>
+            <option value="Tech-support">Tech-support</option>
+            <option value="Craft-repair">Craft-repair</option>
+            <option value="Protective-serv">Protective-serv</option>
+            <option value="Armed-Forces">Armed-Forces</option>
+            <option value="Priv-house-serv">Priv-house-serv</option>
+            <option value="Other-service">Other-service</option>
+        </select>
+      </div>
+
+      <!-- Relationship -->
+      <div class="mb-4">
+        <label for="relationship" class="block text-sm font-medium text-gray-600">Relationship</label>
+        <select name="relationship" id="relationship" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+            <option value="Select an Option">Select an Option</option>
+            <option value="husband">Husband</option>
+            <option value="wife">Wife</option>
+            <option value="unmarried">Unmarried</option>
+            <option value="own-child">Own-child</option>
+            <option value="not-in-family">Not-in-family</option>
+            <option value="other-relative">Other-relative</option>
+        </select>
+      </div>
+
+      <!-- Work class -->
+      <div class="mb-4">
+        <label for="occupation" class="block text-sm font-medium text-gray-600">Occupation</label>
+        <select name="occupation" id="occupation" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+            <option value="Select an Option">Select an Option</option>
+            <option value="State-gov">State-gov</option>
+            <option value="Private">Private</option>
+            <option value="Local-gov">Local-gov</option>
+            <option value="Federal-gov">Federal-gov</option>
+            <option value="Without-pay">Without-pay</option>
+            <option value="Self-emp-inc">Self-emp-inc</option>
+            <option value="Self-emp-not-inc">Self-emp-not-inc</option>
+        </select>
+      </div>
+
+      <!-- Capital-gain -->
+      <div class="mb-4 " >
+        <label for="capital-gain" class="block text-sm font-medium text-gray-600">Capital-gain</label>
+        <input type="number" id="age" name="age" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+      </div>
+
+      <!-- Capital-loss -->
+      <div class="mb-4 col-span-2">
+        <label for="capital-loss" class="block text-sm font-medium text-gray-600">Capital-loss</label>
+        <input type="number" id="age" name="age" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+      </div>
+
+      <!--End of form -->
+      <div class="mb-4 col-span-2">
+        <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300">Submit</button>
+      </div>
+
+    </form>
+  </div>
+
+</body>
+</html>
