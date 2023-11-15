@@ -2,7 +2,7 @@ const Donation = require('../models/tracker');
 
 exports.getStatus = async (req, res) => {
     try {
-        const donation = await Donation.find().sort({ timestamp: -1 });
+        const donation = await Donation.find().sort({ 'statuses.timestamp': -1 });
         res.json(donation);
     } catch (error) {
         console.error(error);

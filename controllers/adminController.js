@@ -1,26 +1,27 @@
-const Donation = require('../models/tracker'); 
+const Donation = require('../models/tracker');
+
+exports.clearUpdates = async (req, res) => {
+    try {
+        // Clear all status updates
+        await Donation.updateMany({}, { $set: { statuses: [] } });
+
+        res.json({ message: 'Status updates cleared' });
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ error: 'Error clearing status updates' });
+    }
+};
 
 exports.updateStatus = async (req, res) => {
     const { status } = req.body;
 
     try {
-        const newStatus = await Donation.findOneAndUpdate({}, { status }, { new: true, upsert: true });
-        res.json(newStatus);
+        const newStatus = { status, timestamp: new Date() };
+
+        const updatedDonation = await Donation.findOneAndUpdate({}, { $push: { statuses: newStatus } }, { new: true, upsert: true });
+        res.json(updatedDonation);
     } catch (error) {
         console.error(error);
         res.status(500).json({ error: 'Error updating donation status' });
-    }
-};
-
-exports.clearUpdates = async (req, res) => {
-    try {
-        // Add logic to clear older donations, e.g., donations older than a certain date.
-        // This code will depend on your specific requirements.
-        // Example: await Donation.deleteMany({ timestamp: { $lt: new Date('2023-01-01') });
-
-        res.json({ message: 'Older donations cleared' });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Error clearing older donations' });
     }
 };
