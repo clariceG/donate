@@ -10,9 +10,9 @@ const jwt = require("jsonwebtoken");
 // @access public
 const signUpUser = asyncHandler(async (req, res) => {
   try {
-    const { firstName, lastName, email, password } = req.body;
+    const { firstName, lastName, email, password, role } = req.body;
 
-    if (!firstName || !lastName || !email || !password) {
+    if (!firstName || !lastName || !email || !password || !role) {
       return res.status(400).json({ message: "Please fill in all the fields" });
     }
 
@@ -29,6 +29,7 @@ const signUpUser = asyncHandler(async (req, res) => {
       lastName: lastName,
       email: email,
       password: hashedPassword,
+      role: role,
     });
 
     const userData = {
@@ -36,6 +37,7 @@ const signUpUser = asyncHandler(async (req, res) => {
       firstName: user.firstName,
       lastName: user.lastName,
       email: user.email,
+      role: user.role,
     };
 
     return res.status(200).json(userData);
@@ -172,7 +174,7 @@ const signInUser = async (req, res, next) => {
 
       if (verificationResult.status === 200) {
         const accessToken = jwt.sign(
-          { id: user._id, name: user.name, email: user.email },
+          { id: user._id, name: user.name, email: user.email, role: user.role },
           process.env.JWT_SECRET,
           { expiresIn: "15m" }
         );
@@ -182,6 +184,7 @@ const signInUser = async (req, res, next) => {
             firstName: user.firstName,
             lastName: user.lastName,
             email: user.email,
+            role: user.role,
           };
 
         return res.status(200).json({ data: userData, token: accessToken });

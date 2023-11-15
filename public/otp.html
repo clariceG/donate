@@ -19,7 +19,7 @@
             }
 
             // Make a request to the / endpoint with the user's token
-            const endpoint = "http://localhost:5000/";
+            const endpoint = "http://localhost:5501/";
             const response = await fetch(endpoint, {
                 method: 'GET',
                 headers: {
@@ -58,7 +58,7 @@
     <script>
         async function sendEmail() {
             const emailInput = document.querySelector('input[name="email"]').value;
-            const endpoint = "http://localhost:5000/otp";
+            const endpoint = "http://localhost:5501/otp";
             
             const response = await fetch(endpoint, {
                 method: 'POST',

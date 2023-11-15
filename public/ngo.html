@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ngo</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body class="bg-gray-200 flex">
+    <!-- Navigation on the left -->
+    <nav class="w-1/4 text-gray-700 p-4">
+        <ul>
+            <li><a href="#drives" class="nav-link">Home Page</a></li>
+            <li><a href="#donations" class="nav-link">Donations</a></li>
+            <li><a href="#predictions" class="nav-link">Predictions</a></li>
+            <li><a href="#" onclick="signOut()" class="nav-link">Logout</a></li>
+        </ul>
+    </nav>
+    <!-- Content on the right -->
+    <main class="w-3/4 p-4">
+        <h1 class="text-4xl font-bold mb-4">Welcome Ngo Personnel!</h1>
+        <p class="text-lg mb-4">
+            Please feel free to explore the different sections.
+        </p> 
+        <section id="view_drives">
+          <div class="absolute top-6 right-4">
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                Add a new drive
+            </button>
+        </div>
+        
+        <!-- <div class="mt-8 grid lg:grid-cols-3 gap-8"> -->
+
+          <!-- drives -->
+          <!-- <div class="bg-white rounded overflow-hidden shadow-md relative">
+            <img src="img/pads.png" alt="sanitary towel" class="h-40 w-full sm:h-48 object-cover">
+            <div class="p-4">
+              <span class="font-bold text-lg">Keep a Girl in School</span>
+              <p class="text-gray-700 text-sm">Donate sanitary towels to girls in school.</p>
+            </div>
+          </div>
+        
+          </div> -->
+
+            <!-- Display drives dynamically -->
+            <div id="drivesContainer" class="mt-8 grid lg:grid-cols-3 gap-8">
+              <!-- Dynamically generated grid items will be placed here -->
+          </div>
+
+        </div>
+        
+      </section>
+
+
+
+
+
+
+
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form id="modalForm" enctype="multipart/form-data" onsubmit="submitForm()">
+                          <div class="mb-4">
+                            <label for="title" class="block text-gray-600 text-sm font-medium">Title</label>
+                            <input
+                                type="text"
+                                id="title"
+                                name="title"
+                                class="form-input w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                                required
+                            />
+                        </div>
+              
+                        <div class="mb-4">
+                            <label for="description" class="block text-gray-600 text-sm font-medium">Description</label>
+                            <textarea
+                                id="description"
+                                name="description"
+                                class="form-textarea w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                                rows="4"
+                                required
+                            ></textarea>
+                        </div>
+              
+                        <div class="mb-4">
+                            <label for="image" class="block text-gray-600 text-sm font-medium">Image URL</label>
+                            <input
+                                type="text"
+                                id="image"
+                                name="image"
+                                class="form-input w-full px-3 py-2 placeholder-gray-400 text-gray-900 rounded-md focus:outline-none focus:ring focus:ring-indigo-400 focus:ring-opacity-50"
+                                required
+                            />
+                        </div>
+                          <button
+                              type="submit"
+                              class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                      
+                          >
+                              Add Drive
+                          </button>
+                      </form>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                  </div>
+              </div>
+          </div>
+      </div>
+
+     
+    </main>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script>
+        function signOut() {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('firstName');
+            localStorage.removeItem('lastName');
+            localStorage.removeItem('email');
+            localStorage.removeItem('token');
+            // Redirect to the login or OTP page as needed
+            window.location.href = 'otp.html'; // You can adjust the destination page
+        }
+
+        async function submitForm() {
+        //event.preventDefault();
+        const title = document.querySelector('#modalForm input[name="title"]').value;
+        const description = document.querySelector('#modalForm textarea[name="description"]').value;
+        const image = document.querySelector('#modalForm input[name="image"]').value;
+
+        // Check if values are empty
+        if (!title || !description || !image) {
+            // Display an error message (you can customize this message)
+            alert('Please fill in all the fields.');
+            return false; // Stop form submission
+        }else{
+          const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+        myModal.hide();
+        }
+
+        
+
+        const endpoint = "http://localhost:5501/api/drives";
+
+        try {
+            const response = await fetch(endpoint, {
+
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    title: title,
+                    description: description,
+                    image: image,
+                }),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('Donation drive added successfully!');
+            } else {
+                const errorData = await response.json();
+                alert('Error: ' + errorData.message);
+            }
+        } catch (error) {
+            console.error('An error occurred during form submission:', error);
+            alert('An unexpected error occurred. Please try again.');
+        }
+
+        // Provide a success message (you can customize this message)
+        return true; // Allow form submission
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+        // Function to handle drive deletion
+        const deleteDrive = async (driveId) => {
+            const deleteEndpoint = `http://localhost:5501/api/drives/${driveId}`;
+
+            try {
+                const response = await fetch(deleteEndpoint, {
+                    method: 'DELETE',
+                });
+
+                if (response.ok) {
+                    alert('Drive deleted successfully!');
+                    // Refresh the page after successful deletion
+                    location.reload();
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('An error occurred during drive deletion:', error);
+                alert('An unexpected error occurred. Please try again.');
+            }
+        };
+
+        // Function to handle drive update
+        const updateDrive = (drive) => {
+            // Populate the modal form with drive details
+            const modalForm = document.getElementById('modalForm');
+            modalForm.querySelector('input[name="title"]').value = drive.title;
+            modalForm.querySelector('textarea[name="description"]').value = drive.description;
+            modalForm.querySelector('input[name="image"]').value = drive.image;
+
+            // Show the modal
+            const myModal = new bootstrap.Modal(document.getElementById('exampleModal'));
+            myModal.show();
+
+            // Override form submission to handle update logic
+            modalForm.onsubmit = async (event) => {
+                event.preventDefault();
+
+                const updatedTitle = modalForm.querySelector('input[name="title"]').value;
+                const updatedDescription = modalForm.querySelector('textarea[name="description"]').value;
+                const updatedImage = modalForm.querySelector('input[name="image"]').value;
+
+                const updateEndpoint = `http://localhost:5501/api/drives/${drive._id}`;
+
+                try {
+                    const response = await fetch(updateEndpoint, {
+                        method: 'PUT',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({
+                            title: updatedTitle,
+                            description: updatedDescription,
+                            image: updatedImage,
+                        }),
+                    });
+
+                    if (response.ok) {
+                        alert('Drive updated successfully!');
+                        // Refresh the page after successful update
+                        location.reload();
+                    } else {
+                        const errorData = await response.json();
+                        alert('Error: ' + errorData.message);
+                    }
+                } catch (error) {
+                    console.error('An error occurred during drive update:', error);
+                    alert('An unexpected error occurred. Please try again.');
+                }
+            };
+        };
+
+        // Fetch data from the endpoint
+        fetch('http://localhost:5501/api/drives')
+            .then(response => response.json())
+            .then(drives => {
+                const drivesContainer = document.getElementById('drivesContainer');
+
+                // Create grid items dynamically based on fetched data
+                drives.forEach(drive => {
+                    const driveItem = document.createElement('div');
+                    driveItem.className = 'bg-white rounded overflow-hidden shadow-md relative';
+
+                    const image = document.createElement('img');
+                    image.src = isValidUrl(drive.image) ? drive.image : 'default_image_url.jpg';
+                    // Set a default image URL or handle it as per your requirements
+                    image.alt = drive.title;
+                    image.className = 'h-40 w-full sm:h-48 object-cover';
+
+                    const contentContainer = document.createElement('div');
+                    contentContainer.className = 'p-4';
+
+                    const title = document.createElement('span');
+                    title.className = 'font-bold text-lg';
+                    title.textContent = drive.title;
+
+                    const description = document.createElement('p');
+                    description.className = 'text-gray-700 text-sm';
+                    description.textContent = drive.description;
+
+                    // Create buttons for deleting and updating
+                    const deleteButton = document.createElement('button');
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.className = 'bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300 mr-2';
+                    deleteButton.addEventListener('click', () => deleteDrive(drive._id));
+
+                    const updateButton = document.createElement('button');
+                    updateButton.textContent = 'Update';
+                    updateButton.className = 'bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-md transition duration-300';
+                    updateButton.addEventListener('click', () => updateDrive(drive));
+
+                    // Append elements to driveItem
+                    contentContainer.appendChild(title);
+                    contentContainer.appendChild(description);
+                    driveItem.appendChild(image);
+                    driveItem.appendChild(contentContainer);
+                    driveItem.appendChild(deleteButton);
+                    driveItem.appendChild(updateButton);
+
+                    // Append driveItem to the container
+                    drivesContainer.appendChild(driveItem);
+                });
+            })
+            .catch(error => {
+                console.error('Error fetching data:', error);
+            });
+
+        // Function to check if a string is a valid URL
+        const isValidUrl = (url) => {
+            try {
+                new URL(url);
+                return true;
+            } catch (error) {
+                return false;
+            }
+        };
+    });
+
+
+
+    </script>
+<!-- <script src="drive.js"></script> -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+</body>
+</html>
