@@ -4,12 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="styles.css">
+    <link  href="https://fonts.googleapis.com/css2?family=Josefin+Sans:ital,wght@0,100;0
+    ,200;0,300;0,400;0,500;0,600;0,700;1,100;1,200;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Donation Ninja</title>
 </head>
 <body class="text-gray-500 ">
   <section>
-  
+     <div>
         <div class="grid md:grid-cols-3">
             <div class="md:col-span-1 md:flex md:justify-end">
               <nav class="text-right">
@@ -36,7 +39,7 @@
                     </a>
                   </li>
                   <li class="py-1">
-                    <a href="#" class="px-4 flex justify-end border-r-4 border-white">
+                    <a href="donate.html" class="px-4 flex justify-end border-r-4 border-white">
                       <span>Donate</span>
                       <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21 11.25v8.25a1.5 1.5 0 01-1.5 1.5H5.25a1.5 1.5 0 01-1.5-1.5v-8.25M12 4.875A2.625 2.625 0 109.375 7.5H12m0-2.625V7.5m0-2.625A2.625 2.625 0 1114.625 7.5H12m0 0V21m-8.625-9.75h18c.621 0 1.125-.504 1.125-1.125v-1.5c0-.621-.504-1.125-1.125-1.125h-18c-.621 0-1.125.504-1.125 1.125v1.5c0 .621.504 1.125 1.125 1.125z" />
@@ -54,7 +57,7 @@
                     </a>
                   </li>
                   <li class="py-1">
-                    <a href="#" class="px-4 flex justify-end border-r-4 border-white">
+                    <a href="#drop" class="px-4 flex justify-end border-r-4 border-white">
                       <span>Drop-Zones</span>
                       <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -64,7 +67,7 @@
                     </a>
                   </li>
                   <li class="py-1">
-                    <a href="#" class="px-4 flex justify-end border-r-4 border-white">
+                    <a href="#contact" class="px-4 flex justify-end border-r-4 border-white">
                       <span>Contact</span>
                       <svg class="w-5 ml-2" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
@@ -149,7 +152,7 @@
     <section class=" " id="about"> <!---About Page-->
     <div class="bg-gray-50 p-16">
       <div class="font-mono ">
-       <h1 class="font-bold text-red-700 text-6xl text-center">About Us</h1>
+       <h1 class="mt-10 font-bold text-5xl text-center">About Us</h1>
       </div>
       <div class="font-mono px-20 text-justify text-gray-700">
        <p class="first-line:uppercase first-line:tracking-widest
@@ -159,50 +162,54 @@
      We aim to streamline the donation tracking process, providing our users with powerful tools to better understand donor behaviors, 
       enhance their fundraising strategies, and ultimately drive positive change in their communities and beyond.</p>
       </div>
-      <br>
-      <h2 class="font-sans font-semibold text-3xl text-center text- 00">Our Team</h2>
-      <div class="columns-3 ">
+      <section class="px-16">
         <div>
-          <img src="img/ceo.webp" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-          <p class="text-center">CEO <br>  <span class="font-semibold"> Sally Nduta</p>
+            <h1 class="mt-10 font-bold text-2xl leading-relaxed text-center">What Our Clients Say About Us</h1>
         </div>
-
+        <div class="float-right">
+            <img src="img/ceo.webp" class="w-40 h-40 rounded-full">
+        </div>
         <div>
-          <img src="img/frontend.webp" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-          <p class="text-center">Accountant <br>  <span class="font-semibold"> Michael Johnson </p>
+            <img src="img/c.png" class="w-20">
+            <p class="font-xl leading-relaxed text-2xl ml-28">The website is a wonderful one. I have used it and I am<br>
+                pleased with the level of services offered.<br>
+                We can track the donations we have made, <br>
+                empower communities, and drive positive change worldwide.<br>   
+            </p>
+            <img src="img/cq2.png" class="float-right mr-44 w-20">       
         </div>
+    </section>
+         
+    <section id="drop" class=" bg-grey-50 text-2xl"> 
+      <div id="skill" class="container bg-white ">
+          <h2 class="mt-10 font-bold text-5xl leading-relaxed text-center"> Drop-off Locations </h2>
+          <h5 class="text-center font-semibold">Safe, Secure and<span> Open-To-All Locations</span> </h5>
+          <p class="font-semibold">The Drop-off Locations include: <br></p>
+          <p> Strathmore University - Karen Ole Sangale Road. <br>
+            University of Nairobi - Lower Kabete. <br> Jomo Kenyatta University of Agriculture and Technology - Juja. <br>
+            Kenyatta University - Kahawa, Nairobi. <br> Aga Khan University - Parklands. <br>
+           Village Market Drof off - Kilimani, Nairobi. <br> Melodica Music Stores - Tom Mboya Street </p>
+      </div>
+    </section>
 
-        <div>
-          <img src="img/kenyan.jpg" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-          <p class="text-center">Front-End Developer <br> <span class="font-semibold">Sarah Ferafaulah</span>  </p>
-        </div>
-
+    <section class=" bg-gray-50">
       <div>
-        <img src="img/hr.webp" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-        <p class="text-center">Senior Marketor <br>  <span class="font-semibold"> John Mwendwa</p>
+          <h1 class="mt-10 font-bold text-5xl leading-relaxed text-center">Contact Us</h1>
       </div>
-
-      <div>
-        <img src="img/cindy.avif" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-        <p class="text-center"> Machine Learning Expert <br> <span class="font-semibold"> Cindy Anifa</p>
-      </div>
-
-       <div>
-        <img src="img/row.webp" alt="" class="w-28 h-28 rounded-full hover:border-r-4 border-red-500 m-4">
-        <p class="text-center">Philanthropic Expert <br>  <span class="font-semibold"> James Curlton</p>
-      </div>
-      </div>
+      <!--Contact Me-->
+          <footer id="contact" class="mt-8">
+            <p class="text-gray-700">Below are our social handles:</p>
+            <p>Don't hesitate to reach out to us via the provided contact information. <p> <br>
+                <div class="flex space-x-4 justify-center">
+                <a href="https://www.facebook.com/login/"> <i class="fab fa-facebook-f text-blue-500 text-6xl hover:text-7xl transition"></i></a>
+                <a href="https://instagram.en.softonic.com/download"> <i class="fab fa-instagram text-pink-500 text-6xl hover:text-7xl transition"></i></a>
+                <a href="https://www.whatsapp.com/download"> <i class="fab fa-whatsapp text-green-500 text-6xl hover:text-7xl transition"></i></a>
+            </div>
+            <p class="mt-4 text-center font-bold">2023</p>
+         </footer>
+    </section>
     </div>
-     </section>
-
-    <section id="drop"> 
-      <div class="container bg-white py-16 px-16 shadow-lg"></div>
-
-    </section>
-
-    <section> <!---Contact Page-->
-
-    </section>
+  </section>
 
 
     <script src="index.js"></script> 

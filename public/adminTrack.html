@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <title>Tracker</title>
+</head>
+<body class="bg-gray-200 flex">
+    <div class="container mx-auto w-3/4 p-4">
+        <h1 class="text-4xl font-bold mb-4">Welcome Ngo Personnel!</h1>
+        <p class="text-lg mb-4">
+            Please feel free to explore the different sections.
+        </p> 
+        <h1 class="text-2xl font-bold mb-4">Donation Status</h1>  
+        
+        <!-- Form to update status -->
+        <form id="updateStatusForm">
+            <label for="status" class="text-black">Update Status:</label>
+            <input type="text" id="status" name="status" class="bg-white p-2 rounded mb-4" required>
+
+            <button type="submit" class="bg-red-600 text-black py-2 px-4 rounded">Update</button>
+        </form>
+
+        <!-- Button to clear status updates -->
+        <button id="clearUpdatesBtn" class="bg-red-500 text-white py-2 px-4 rounded mt-4">Clear Status Updates</button>
+    
+
+    <!-- Back Button -->
+    <div class="mt-4">
+        <a href="ngo.html" class="bg-blue-500 text-white py-2 px-4 rounded">Back</a>
+    </div>
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="trackerapp.js"></script>
+</body>
+</html>
