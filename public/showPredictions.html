@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Predictions</title>
+    <!-- Add Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200">
+    <div class="container mx-auto p-4">
+        <!-- Back Button -->
+        <a href="ngo.html" class="text-blue-500 mb-4 inline-block">&lt; <span>Back</span> </a>
+  
+        <h1 class="text-2xl font-bold mb-4">View Predictions</h1>
+
+        <!-- Table to display predictions -->
+        <table class="min-w-full bg-white border border-gray-300 divide-y divide-gray-300">
+            <thead>
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">First Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Last Name</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Result</th>
+                </tr>
+            </thead>
+            <tbody id="predictionsContainer"></tbody>
+        </table>
+    </div>
+
+    <script>
+        // Fetch predictions and display in tabular format
+        async function fetchPredictions() {
+            try {
+                const response = await fetch('http://localhost:5501/predictions');
+                const data = await response.json();
+
+                // Display predictions in a tabular format
+                displayPredictions(data.data);
+            } catch (error) {
+                console.error('Error fetching predictions:', error.message);
+            }
+        }
+
+        function displayPredictions(predictions) {
+            const predictionsContainer = document.getElementById('predictionsContainer');
+
+            // Clear existing table
+            predictionsContainer.innerHTML = '';
+
+            // Create rows for each prediction
+            predictions.forEach(prediction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="px-6 py-4">${prediction.firstName}</td>
+                    <td class="px-6 py-4">${prediction.lastName}</td>
+                    <td class="px-6 py-4">${prediction.email}</td>
+                    <td class="px-6 py-4">${prediction.result || 'Not available'}</td>
+                `;
+
+                predictionsContainer.appendChild(row);
+            });
+        }
+
+        // Fetch predictions when the page loads
+        fetchPredictions();
+    </script>
+</body>
+</html>

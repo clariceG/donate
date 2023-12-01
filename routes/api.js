@@ -32,18 +32,18 @@ router.get('/drives/:id', async (req, res) => {
 });
 
 
-// Load more donation drives (pagination)
-router.get('/drives/more/:skip/:limit', async (req, res) => {
-    const skip = parseInt(req.params.skip);
-    const limit = parseInt(req.params.limit);
+// // Load more donation drives (pagination)
+// router.get('/drives/more/:skip/:limit', async (req, res) => {
+//     const skip = parseInt(req.params.skip);
+//     const limit = parseInt(req.params.limit);
 
-    try {
-        const drives = await Drive.find({}).skip(skip).limit(limit);
-        res.json(drives);
-    } catch (err) {
-        res.status(500).json({ error: 'Server error' });
-    }
-});
+//     try {
+//         const drives = await Drive.find({}).skip(skip).limit(limit);
+//         res.json(drives);
+//     } catch (err) {
+//         res.status(500).json({ error: 'Server error' });
+//     }
+// });
 
 // Add a new donation drive (for NGO personnel)
 router.post('/drives', async (req, res) => {
@@ -95,5 +95,8 @@ router.delete('/drives/:id', async (req, res) => {
         res.status(500).json({ error: 'Failed to delete the drive' });
     }
 });
+
+
+
 
 module.exports = router;

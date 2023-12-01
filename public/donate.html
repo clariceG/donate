@@ -9,23 +9,14 @@
 <body class="bg-gray-200 p-4">
     <div class="max-w-md mx-auto bg-white p-8 shadow-md rounded-md">
         <h2 class="text-2xl font-bold mb-4">Donation Form</h2>
-        <form action="#" method="POST">
+
+        <form onsubmit="event.preventDefault(); submitDonationForm();" id="donationForm">
             <div class="mb-4">
-                <label for="firstName" class="block text-gray-600 text-sm font-medium">First Name</label>
+                <label for="email" class="block text-gray-600 text-sm font-medium">Email</label>
                 <input
                     type="text"
-                    id="firstName"
-                    name="firstName"
-                    class="form-input"
-                    required
-                />
-            </div>
-            <div class="mb-4">
-                <label for="lastName" class="block text-gray-600 text-sm font-medium">Last Name</label>
-                <input
-                    type="text"
-                    id="lastName"
-                    name="lastName"
+                    id="email"
+                    name="email"
                     class="form-input"
                     required
                 />
@@ -46,15 +37,30 @@
             </div>
             <div class="mb-4" id="dropOffSiteField" style="display: none;">
                 <label for="dropOffSite" class="block text-gray-600 text-sm font-medium">Drop-off Site</label>
-                <input
-                    type="text"
-                    id="dropOffSite"
-                    name="dropOffSite"
-                    class="form-input"
-                />
+                <select
+                    id="dropOff"
+                    name="dropOff"
+                    class="form-select"
+                >
+                    <option value="" disabled selected>Select drop-off site</option>
+                    <option value="Strathmore University - Karen Ole Sangale Road">Strathmore University - Karen Ole Sangale Road</option>
+                    <option value="University of Nairobi - Lower Kabete">University of Nairobi - Lower Kabete</option>
+                    <option value="Jomo Kenyatta University of Agriculture and Technology - Juja">Jomo Kenyatta University of Agriculture and Technology - Juja</option>
+                    <option value="Kenyatta University - Kahawa, Nairobi">Kenyatta University - Kahawa, Nairobi</option>
+                    <option value="Aga Khan University - Parklands">Aga Khan University - Parklands</option>
+                    <option value="Village Market Drof off - Kilimani, Nairobi">Village Market Drof off - Kilimani, Nairobi</option>
+                    <option value="Melodica Music Stores - Tom Mboya Street">Melodica Music Stores - Tom Mboya Street</option>
+                </select>
             </div>
             <div class="mb-4" id="mpesaField" style="display: none;">
-                <label for="mobileNumber" class="block text-gray-600 text-sm font-medium">Mobile Number (Mpesa)</label>
+                <label for="amount" class="block text-gray-600 text-sm font-medium">Amount</label>
+                <input
+                    type="text"
+                    id="Amount"
+                    name="Amount"
+                    class="form-input"
+                />
+                <label for="mobileNumber" class="block text-gray-600 text-sm font-medium mt-2">Mobile Number (Mpesa)</label>
                 <input
                     type="text"
                     id="mobileNumber"
@@ -64,8 +70,9 @@
             </div>
             <div class="mt-6">
                 <button
-                    type="submit"
+                    type="button"
                     class="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                    onclick="submitDonationForm()"
                 >
                     Donate
                 </button>
@@ -73,23 +80,17 @@
             <div class="mt-6">
                 <div class="flex justify-between">
                     <button
-                        type="button"
-                        id="btnBack"
-                        class="bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-300"
-                    >
-                        Back
-                    </button>
-                    <button
-                        type="button"
-                        id="btnNext"
-                        class="bg-red-400 hover:bg-red-500 text-white font-medium py-2 px-4 rounded-md transition duration-300"
-                    >
-                        Next
+                      type="button"
+                      id="btnBack"
+                      class="bg-gray-400 text-white font-medium py-2 px-4 rounded-md transition duration-300"
+                      onclick="goToDonorPage()"
+                  >
+                      Back
                     </button>
                 </div>
+            </div>
         </form>
     </div>
-
     <script>
         const donationTypeSelect = document.getElementById('donationType');
         const dropOffSiteField = document.getElementById('dropOffSiteField');
@@ -100,6 +101,78 @@
             dropOffSiteField.style.display = selectedDonationType === 'food' || selectedDonationType === 'sanitaryTowels' ? 'block' : 'none';
             mpesaField.style.display = selectedDonationType === 'money' ? 'block' : 'none';
         });
+
+        function goToDonorPage() {
+            // Redirect to donor.html
+            window.location.href = 'donor.html';
+        }
+
+        async function submitDonationForm() {
+            // Retrieve common fields
+            const email = document.querySelector('#email').value;
+            const donationType = document.querySelector('#donationType').value;
+
+            // Fields specific to Money donation type
+            let Amount, mobileNumber;
+
+            if (donationType === 'money') {
+                Amount = document.querySelector('#Amount').value;
+                mobileNumber = document.querySelector('#mobileNumber').value;
+            }
+
+            // Fields specific to other donation types
+            let dropOff, status, arrivedAtDestination;
+
+            if (donationType !== 'money') {
+                dropOff = document.querySelector('#dropOff').value;
+                status = document.querySelector('#status').value;
+                arrivedAtDestination = document.querySelector('#arrivedAtDestination').value;
+            }
+
+            // Check if values are empty
+            if (!email || !donationType || (!Amount && donationType === 'money') || (!dropOff && donationType !== 'money')) {
+                // Display an error message (you can customize this message)
+                alert('Please fill in all the required fields.');
+                return false; // Stop form submission
+            }
+
+            // Add logic here to send the formData to your server endpoint
+            // For example, using fetch or axios
+            const endpoint = 'http://localhost:5501/donate';
+
+            try {
+                const response = await fetch(endpoint, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        email: email,
+                        donationType: donationType,
+                        Amount: Amount,
+                        dropOff: dropOff,
+                        mobileNumber: mobileNumber,
+                        status: status,
+                        arrivedAtDestination: arrivedAtDestination,
+                    }),
+                });
+
+                if (response.ok) {
+                    const data = await response.json();
+                    alert('Thank you! Donation received!');
+                } else {
+                    const errorData = await response.json();
+                    alert('Error: ' + errorData.message);
+                }
+            } catch (error) {
+                console.error('An error occurred during form submission:', error);
+                alert('An unexpected error occurred. Please try again.');
+            }
+
+            // Provide a success message (you can customize this message)
+            return true; // Allow form submission
+        }
     </script>
+
 </body>
 </html>

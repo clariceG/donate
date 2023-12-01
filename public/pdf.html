@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js" integrity="sha512-GsLlZN/3F2ErC5ifS5QtgpiJtWd43JWSuIgh7mbzZ8zBps+dvLusV+eNQATqgA/HdeKFVgA5v3S/cIrLF7QnIg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script> <!-- Include html2pdf library directly -->
+  <!-- <script src="/public/html2pdf.js"></script> -->
+</head>
+<body>
+  <!-- Your HTML content to be converted to PDF -->
+  <div id="content">
+    <h1>Hello, this will be in the PDF!</h1>
+    <p>You can add any HTML content here.</p>
+  </div>
+
+  <!-- Button to trigger PDF generation and download -->
+  <button onclick="generatePDF()">Generate PDF</button>
+
+  <script>
+    function generatePDF() {
+      console.log('Generating PDF...');
+
+      // Get the element to be converted to PDF
+      const content = document.getElementById('content');
+
+      // Set options for pdf generation
+      const options = {
+        margin: 10,
+        filename: 'generated-pdf.pdf',
+        image: { type: 'jpeg', quality: 0.98 },
+        html2canvas: { scale: 2 },
+        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' },
+      };
+
+      // Generate PDF
+      html2pdf().from(content).set(options).outputPdf(pdf => {
+        console.log('PDF generated successfully.');
+
+        // Trigger download
+        const blob = new Blob([pdf], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = options.filename;
+        link.click();
+      });
+    }
+  </script>
+</body>
+</html>

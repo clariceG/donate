@@ -11,8 +11,10 @@
   <div class="bg-white p-8 rounded shadow-md w-full sm:w-full md:w-3/4 lg:w-1/2 xl:w-1/3 ">
 
     <h2 class="text-2xl font-semibold text-center mb-4">User Details Form</h2>
-
-    <form action="/userdetails" method="post" class="grid grid-cols-2 gap-4">
+    
+    <p>Please fill the form below.</p>
+    <form onsubmit="event.preventDefault(); form();" class="grid grid-cols-2 gap-4">
+      
 
       <!-- Gender -->
       <div class="mb-4 ">
@@ -32,8 +34,8 @@
 
       <!-- Education Level -->
       <div class="mb-4">
-        <label for="education" class="block text-sm font-medium text-gray-600">Education Level</label>
-        <select id="education" name="education" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        <label for="education_level" class="block text-sm font-medium text-gray-600">Education Level</label>
+        <select id="education" name="education_level" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
           <option value="Select an Option">Select an Option</option>
           <option value="Bachelors">Bachelors</option>
           <option value="HS-grad">HS-grad</option>
@@ -56,8 +58,8 @@
 
       <!-- Marital Status -->
       <div class="mb-4">
-        <label for="maritalStatus" class="block text-sm font-medium text-gray-600">Marital Status</label>
-        <select id="maritalStatus" name="maritalStatus" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        <label for="marital_status" class="block text-sm font-medium text-gray-600">Marital Status</label>
+        <select id="maritalStatus" name="marital_status" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
           <option value="Select an Option">Select an Option</option>
           <option value="Never-married">Never-married</option>
           <option value="Married-civ-spouse">Married-civ-spouse</option>
@@ -107,8 +109,8 @@
 
       <!-- Work class -->
       <div class="mb-4">
-        <label for="occupation" class="block text-sm font-medium text-gray-600">Occupation</label>
-        <select name="occupation" id="occupation" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
+        <label for="workclass" class="block text-sm font-medium text-gray-600">Work class</label>
+        <select name="workclass" id="workclass" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300">
             <option value="Select an Option">Select an Option</option>
             <option value="State-gov">State-gov</option>
             <option value="Private">Private</option>
@@ -122,23 +124,96 @@
 
       <!-- Capital-gain -->
       <div class="mb-4 " >
-        <label for="capital-gain" class="block text-sm font-medium text-gray-600">Capital-gain</label>
-        <input type="number" id="age" name="age" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+        <label for="capitalGain" class="block text-sm font-medium text-gray-600">Capital-gain</label>
+        <input type="number" id="capitalGain" name="capitalGain" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
       </div>
 
       <!-- Capital-loss -->
       <div class="mb-4 col-span-2">
-        <label for="capital-loss" class="block text-sm font-medium text-gray-600">Capital-loss</label>
-        <input type="number" id="age" name="age" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
+        <label for="capitalLoss" class="block text-sm font-medium text-gray-600">Capital-loss</label>
+        <input type="number" id="capitalLoss" name="capitalLoss" class="mt-1 p-2 w-full border border-gray-300 rounded-md focus:outline-none focus:ring focus:border-blue-300" required>
       </div>
 
       <!--End of form -->
       <div class="mb-4 col-span-2">
         <button type="submit" class="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600 focus:outline-none focus:ring focus:border-blue-300">Submit</button>
       </div>
-
     </form>
   </div> 
+
+  <script>
+    async function form() {
+      const gender = document.querySelector('#gender').value;
+      const age = document.querySelector('#age').value;
+      const education = document.querySelector('#education').value;
+      const maritalStatus = document.querySelector('#maritalStatus').value;
+      const occupation = document.querySelector('#occupation').value;
+      const relationship = document.querySelector('#relationship').value;
+      const workclass = document.querySelector('#workclass').value;
+      const capitalGain = document.querySelector('#capitalGain').value;
+      const capitalLoss = document.querySelector('#capitalLoss').value;
+
+      // Check if any required field is empty
+      if (!gender || !age || !education || !maritalStatus || !occupation || !relationship || !workclass || !capitalGain || !capitalLoss ) {
+          alert('Please fill in all required fields.');
+          return;
+      }
+
+      const endpointPredict = "http://localhost:5000/predict";
+      const endpointStore = "http://localhost:5501/store";
+
+      const responsePredict = await fetch(endpointPredict, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          sex: gender,
+          age: parseFloat(age),
+          education_level: education,
+          marital_status: maritalStatus,
+          occupation: occupation,
+          relationship: relationship,
+          workclass: workclass,
+          capital_gain: parseFloat(capitalGain),
+          capital_loss: parseFloat(capitalLoss),
+        }),
+      });
+
+      if (responsePredict.status === 200) {
+        const resultData = await responsePredict.json();
+        
+
+        // Retrieve email from local storage
+        const email = localStorage.getItem('email');
+
+        // Store the details in the database
+        const responseStore = await fetch(endpointStore, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            email: email,
+            result: resultData.result,
+          }),
+        });
+
+        if (responseStore.status === 200) {
+          const storeData = await responseStore.json();
+          alert('Details Stored: ' + storeData.message);
+          window.location.href = 'donor.html'; // Redirect to donor.html
+        } else {
+          const errorStoreData = await responseStore.json();
+          alert('Error storing details: ' + errorStoreData.message);
+        }
+
+      } else {
+          const errorData = await responsePredict.json();
+          alert('Error predicting: ' + errorData.message);
+      }
+    }
+  </script>
 
 </body>
 </html>

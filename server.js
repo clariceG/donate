@@ -1,12 +1,18 @@
+// Increase the max listeners
+//require('events').EventEmitter.defaultMaxListeners = 15;
+
 const dotenv = require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const axios = require ("axios")
 const apiRoutes = require("./routes/api");
 const adminRouter = require('./routes/admin');
 const donorRouter = require('./routes/donor');
+const pdfRouter = require('./routes/pdf')
 const request = require('request');
-const axios = require('axios'); // Add this line to import axios
+const donationRoutes = require('./routes/donation');
+
 
 const app = express();
 const port = process.env.PORT;
@@ -22,7 +28,13 @@ app.use("/api", apiRoutes);
 app.use('/admin', adminRouter);
 // donor routes
 app.use('/donor', donorRouter);
+// pdf route
+app.use('/pdf', pdfRouter);
+// Donation routes
+app.use('/donate', donationRoutes);
 
+
+// starting server
 mongoose
   .connect(MONGODB_URI, { useNewUrlParser: true, useUnifiedTopology: true })
   .then(() => {

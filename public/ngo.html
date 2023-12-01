@@ -14,7 +14,7 @@
             <li><a href="#drives" class="nav-link">Home Page</a></li>
             <li><a href="#donations" class="nav-link">Donations</a></li>
             <li><a href="adminTrack.html" class="nav-link">Donation Status</a></li>
-            <li><a href="#predictions" class="nav-link">Predictions</a></li>
+            <li><a href="showPredictions.html" class="nav-link">Predictions</a></li>
             <li><a href="#" onclick="signOut()" class="nav-link">Logout</a></li>
         </ul>
     </nav>
@@ -211,6 +211,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 alert('An unexpected error occurred. Please try again.');
             }
         };
+        
+        
 
         // Function to handle drive update
         const updateDrive = (drive) => {

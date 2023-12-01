@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop-Off site Official</title>
+
+    <!-- Add Tailwind CSS CDN for styling -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-200 flex">
+    <nav class="w-1/4 text-gray-700 p-4">
+        <ul>
+            <li><a href="#" onclick="signOut()" class="nav-link">Logout</a></li>
+        </ul>
+    </nav>
+
+    <main class="w-3/4 p-4">
+        <h1 class="text-4xl font-bold mb-4">Welcome Drop-Off site Official!</h1>
+        <p class="text-lg mb-4">
+            Please feel free to explore the different sections.
+        </p>
+
+        <div id="donationsContainer" class="overflow-x-auto">
+            <!-- Donations will be displayed here -->
+        </div>
+    </main>
+
+    <script>
+        function signOut() {
+            localStorage.removeItem('userId');
+            localStorage.removeItem('firstName');
+            localStorage.removeItem('lastName');
+            localStorage.removeItem('email');
+            localStorage.removeItem('token');
+            // Redirect to the login or OTP page as needed
+            window.location.href = 'index.html'; // You can adjust the destination page
+        }
+
+        async function fetchDonations() {
+            try {
+                const response = await fetch('http://localhost:5501/donations');
+                const data = await response.json();
+
+                // Display donations in a tabular format
+                displayDonations(data.data);
+            } catch (error) {
+                console.error('Error fetching donations:', error.message);
+            }
+        }
+
+        function displayDonations(donations) {
+            const donationsContainer = document.getElementById('donationsContainer');
+            
+            // Clear existing table
+            donationsContainer.innerHTML = '';
+
+            const table = document.createElement('table');
+            table.classList.add('min-w-full', 'bg-white', 'border', 'border-gray-300', 'divide-y', 'divide-gray-300');
+            table.innerHTML = `
+                <thead>
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Arrival</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    ${donations.map(donation => `
+                        <tr>
+                            <td class="px-6 py-4 whitespace-nowrap">${donation.email}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${donation.status}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">${donation.arrivedAtDestination}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <button onclick="updateDonationStatus('${donation._id}')" class="text-indigo-600 hover:text-indigo-900">Update Status</button>
+                                <button onclick="updateArrival('${donation._id}')" class="text-indigo-600 hover:text-indigo-900">Update Arrival</button>
+                            </td>
+                        </tr>
+                    `).join('')}
+                </tbody>
+            `;
+
+            donationsContainer.appendChild(table);
+        }
+
+        async function updateDonationStatus(donationId) {
+            const status = prompt('Enter new status:');
+            if (status !== null) {
+                try {
+                    await fetch(`http://localhost:5501/status/${donationId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ status }),
+                    });
+
+                    // Refresh donations after update
+                    fetchDonations();
+                } catch (error) {
+                    console.error('Error updating donation status:', error.message);
+                }
+            }
+        }
+
+        async function updateArrival(donationId) {
+            const arrivedAtDestination = prompt('Enter arrival status:');
+            if (arrivedAtDestination !== null) {
+                try {
+                    await fetch(`http://localhost:5501/arrival/${donationId}`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                        body: JSON.stringify({ arrivedAtDestination }),
+                    });
+
+                    // Refresh donations after update
+                    fetchDonations();
+                } catch (error) {
+                    console.error('Error updating arrival status:', error.message);
+                }
+            }
+        }
+
+        // Fetch donations when the page loads
+        fetchDonations();
+    </script>
+</body>
+</html>

@@ -93,8 +93,10 @@
                 localStorage.setItem('token', data.token);
                 if(data.data.role === "1"){
                     window.location.href = 'donor.html';
-                }else{
+                }else if(data.data.role === "2"){
                     window.location.href = 'ngo.html';
+                }else{
+                    window.location.href = 'official.html';
                 }
                  // Redirect to donation.html
             } else {

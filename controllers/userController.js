@@ -1,4 +1,5 @@
 const UserModel = require("../models/userModel");
+const DonationModel = require("../models/donation");
 const OtpModel = require("../models/emailOtpModel");
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
@@ -103,6 +104,48 @@ const sendEmailOTP = async (req, res, next) => {
         .status(500)
         .json({ message: "An error occurred while sending the email" });
     }
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+};
+
+
+//Send email to donors with high income
+const sendEmailToDonor = async (req, res, next) => {
+  const { email, result } = req.body;
+
+  if (!email || !result) {
+    return res.status(400).json({ message: "All fields are mandatory" });
+  }
+
+  try {
+    const userExists = await UserModel.findOne({ email });
+
+    if (!userExists) {
+      return res.status(404).json({ message: "Email not found" });
+    }
+
+    // Update the result field in the user model
+    await UserModel.updateOne({ email }, { result });
+
+
+    if (result === "High Income"){
+      const success = await sendEmail({
+        subject: "Donation Reminder",
+        html: `
+                  <h3>Welcome back to Donation Ninja!</h3>
+                  <p>Do not forget to donate! Your support makes a difference.</p>
+              `,
+        to: email,
+        from: process.env.GOOGLE_EMAIL,
+      });
+
+    }
+
+
+    return res.status(200).json({ message: "Details Stored" });
+
+ 
   } catch (error) {
     return res.status(500).json({ message: error.message });
   }
@@ -239,6 +282,158 @@ const updateUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
+// Store donation details
+// @route POST /api/donation/store
+// @access public
+const storeDonation = asyncHandler(async (req, res) => {
+
+  try {
+    const { email, donationType, Amount, dropOff, mobileNumber } = req.body;
+
+    const status = "Not yet picked";
+
+    // if (!email) {
+    //   return res.status(400).json({ message: "Please fill in all the fields" });
+    // }
+
+    if(donationType === "money"){
+
+      const newDonation = await DonationModel.create({
+        email,
+        donationType,
+        Amount,
+        dropOff: "N/A",
+        status,
+        mobileNumber,
+      });
+
+      return res.status(200).json({ message: "Donation stored successfully", data: newDonation });
+
+    }else{
+
+      const newDonation = await DonationModel.create({
+        email,
+        donationType,
+        Amount: "0.0",
+        dropOff: "dropOff",
+        status,
+        mobileNumber,
+      });
+
+      return res.status(200).json({ message: "Donation stored successfully", data: newDonation });
+    }
+
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+
+//get donations by email
+const getDonationsByEmail = asyncHandler(async (req, res) => {
+  try {
+    const {email} = req.body;
+
+    // Check if email is provided
+    if (!email) {
+      return res.status(400).json({ message: "Email is required" });
+    }
+
+    // Fetch donations by email
+    const donations = await DonationModel.find({ email });
+
+    return res.status(200).json({ message: "Donations fetched successfully", data: donations });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+
+const getDonations = asyncHandler(async (req, res) => {
+  try {
+    // Fetch all donations
+    const donations = await DonationModel.find();
+
+    return res.status(200).json({ message: "All donations fetched successfully", data: donations });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+//get predictions
+const getPredictions = asyncHandler(async (req, res) => {
+  try {
+    const users = await UserModel.find({}, 'firstName lastName email result');
+    res.status(200).json({ success: true, data: users });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+// Updating donation status
+const updateDonationStatus = asyncHandler(async (req, res) => {
+  try {
+    const { donationId } = req.params; // Extract donationId from URL params
+    const { status } = req.body;
+
+    // Check if donationId and status are provided
+    if (!donationId || !status) {
+      return res.status(400).json({ message: "Donation ID and status are required" });
+    }
+
+    // Find the donation by ID
+    const donation = await DonationModel.findById(donationId);
+
+    // Check if the donation exists
+    if (!donation) {
+      return res.status(404).json({ message: "Donation not found" });
+    }
+
+    // Update the status
+    donation.status = status;
+
+    // Save the updated donation
+    await donation.save();
+
+    return res.status(200).json({ message: "Donation status updated successfully", data: donation });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+
+// Updating donation status
+const updateArrivalofDonation = asyncHandler(async (req, res) => {
+  try {
+    const { donationId } = req.params; // Assuming the donation ID is passed in the URL parameters
+    const { arrivedAtDestination } = req.body;
+
+    // Check if the donation ID and status are provided
+    if (!donationId || !arrivedAtDestination) {
+      return res.status(400).json({ message: "Donation ID and status are required" });
+    }
+
+    // Find the donation by ID
+    const donation = await DonationModel.findById(donationId);
+
+    // Check if the donation exists
+    if (!donation) {
+      return res.status(404).json({ message: "Donation not found" });
+    }
+
+    // Update the status
+    donation.arrivedAtDestination = arrivedAtDestination;
+
+    // Save the updated donation
+    await donation.save();
+
+    return res.status(200).json({ message: "Donation status updated successfully", data: donation });
+  } catch (error) {
+    return res.status(500).json({ message: error.message });
+  }
+});
+
+
 // Delete user profile
 // @route DELETE /api/user/:userId
 // @access private
@@ -298,4 +493,11 @@ module.exports = {
   updateUserProfile,
   deleteUserProfile,
   currentUser,
+  sendEmailToDonor,
+  storeDonation,
+  getDonationsByEmail,
+  updateDonationStatus,
+  updateArrivalofDonation,
+  getDonations,
+  getPredictions
 };
